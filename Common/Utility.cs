@@ -100,32 +100,32 @@ namespace Leaves_FAT_Management.Common
         /// <param name="subject"></param>
         /// <param name="htmlBody"></param>
         /// <param name="attachments"></param>
-        public static void OpenOutlookMail(string to, string cc, string subject, string htmlBody, string[] attachments)
-        {
-            // Create outlook application object.
-            var outlookApplication = new Microsoft.Office.Interop.Outlook.Application();
+        //public static void OpenOutlookMail(string to, string cc, string subject, string htmlBody, string[] attachments)
+        //{
+        //    // Create outlook application object.
+        //    var outlookApplication = new Microsoft.Office.Interop.Outlook.Application();
 
-            // Create mail message.
-            var newMail = (Microsoft.Office.Interop.Outlook.MailItem)outlookApplication.CreateItem(Microsoft.Office.Interop.Outlook.OlItemType.olMailItem);
+        //    // Create mail message.
+        //    var newMail = (Microsoft.Office.Interop.Outlook.MailItem)outlookApplication.CreateItem(Microsoft.Office.Interop.Outlook.OlItemType.olMailItem);
 
-            newMail.To = to;
-            newMail.CC = cc;
-            newMail.Subject = subject;
-            newMail.BodyFormat = Microsoft.Office.Interop.Outlook.OlBodyFormat.olFormatHTML;
-            newMail.HTMLBody = htmlBody;            
+        //    newMail.To = to;
+        //    newMail.CC = cc;
+        //    newMail.Subject = subject;
+        //    newMail.BodyFormat = Microsoft.Office.Interop.Outlook.OlBodyFormat.olFormatHTML;
+        //    newMail.HTMLBody = htmlBody;            
 
-            // add all attachments (if any)
-            if (attachments != null)
-            {
-                foreach (string attachment in attachments)
-                {
-                    newMail.Attachments.Add(attachment);
-                }
-            }
+        //    // add all attachments (if any)
+        //    if (attachments != null)
+        //    {
+        //        foreach (string attachment in attachments)
+        //        {
+        //            newMail.Attachments.Add(attachment);
+        //        }
+        //    }
 
-            // open mail window
-            newMail.Display(false);
-        }
+        //    // open mail window
+        //    newMail.Display(false);
+        //}
 
         /// <summary>
         /// Encrypt a string

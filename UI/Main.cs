@@ -379,95 +379,98 @@ namespace Leaves_FAT_Management.UI
         /// <returns></returns>
         private FATCount ReadFAT(string fileName)
         {
-            string excelCellTotal = ConfigurationManager.AppSettings["ExcelCellTotal"]; // grand total AY15
-            string excelColumnSubTotal = ConfigurationManager.AppSettings["ExcelColumnSubTotal"]; // sub total AZ{0}
-            string excelCellMaladie = ConfigurationManager.AppSettings["ExcelCellMaladie"]; // Maladie
-            string excelCellCongesPayes = ConfigurationManager.AppSettings["ExcelCellCongesPayes"]; // Congés payés
-            string excelCellFerie = ConfigurationManager.AppSettings["ExcelCellFerie"]; // Férié
-            string excelCellCongesExceptionnels = ConfigurationManager.AppSettings["ExcelCellCongesExceptionnels"]; // Congés exceptionnels (à préciser)
-            // ABO 22/03/2016
-            string excelCellFormation = ConfigurationManager.AppSettings["ExcelCellFormation"]; //Formation
+            //string excelCellTotal = ConfigurationManager.AppSettings["ExcelCellTotal"]; // grand total AY15
+            //string excelColumnSubTotal = ConfigurationManager.AppSettings["ExcelColumnSubTotal"]; // sub total AZ{0}
+            //string excelCellMaladie = ConfigurationManager.AppSettings["ExcelCellMaladie"]; // Maladie
+            //string excelCellCongesPayes = ConfigurationManager.AppSettings["ExcelCellCongesPayes"]; // Congés payés
+            //string excelCellFerie = ConfigurationManager.AppSettings["ExcelCellFerie"]; // Férié
+            //string excelCellCongesExceptionnels = ConfigurationManager.AppSettings["ExcelCellCongesExceptionnels"]; // Congés exceptionnels (à préciser)
+            //// ABO 22/03/2016
+            //string excelCellFormation = ConfigurationManager.AppSettings["ExcelCellFormation"]; //Formation
 
-            // get the processid of EXCEL
-            // Pour trouver l'is du process excel on compare la liste entre les process avant et apres.
-            int processId = 0;
-            Process[] processBefore = Process.GetProcessesByName("EXCEL");
-            Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
-            Process[] processAfter = Process.GetProcessesByName("EXCEL");
+            //// get the processid of EXCEL
+            //// Pour trouver l'is du process excel on compare la liste entre les process avant et apres.
+            //int processId = 0;
+            //Process[] processBefore = Process.GetProcessesByName("EXCEL");
+            //Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
+            //Process[] processAfter = Process.GetProcessesByName("EXCEL");
 
-            // Parcourir les process apres création pour retrouver celui correspondant à cette instance
-            processId = GetProcessIDExcel(processBefore, processAfter);
+            //// Parcourir les process apres création pour retrouver celui correspondant à cette instance
+            //processId = GetProcessIDExcel(processBefore, processAfter);
 
-            Microsoft.Office.Interop.Excel.Workbooks workbooks = excelApp.Workbooks;
-            Microsoft.Office.Interop.Excel.Workbook workbook = workbooks.Open(
-               fileName, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows,
-               "\t", false, false, 0, true);
-            Microsoft.Office.Interop.Excel.Sheets worksheets = workbook.Worksheets;
-            Microsoft.Office.Interop.Excel.Worksheet worksheet = (Microsoft.Office.Interop.Excel.Worksheet)worksheets.get_Item(3); // analyse sheet
+            //Microsoft.Office.Interop.Excel.Workbooks workbooks = excelApp.Workbooks;
+            //Microsoft.Office.Interop.Excel.Workbook workbook = workbooks.Open(
+            //   fileName, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows,
+            //   "\t", false, false, 0, true);
+            //Microsoft.Office.Interop.Excel.Sheets worksheets = workbook.Worksheets;
+            //Microsoft.Office.Interop.Excel.Worksheet worksheet = (Microsoft.Office.Interop.Excel.Worksheet)worksheets.get_Item(3); // analyse sheet
 
-            // dynamically read the cell position of NON FAT section
-            for (int i = 1; i < 100; i++)
-            {
-                Microsoft.Office.Interop.Excel.Range range = worksheet.get_Range("B" + i.ToString());
-                string cellValue = Convert.ToString(range.Cells.Value);
+            //// dynamically read the cell position of NON FAT section
+            //for (int i = 1; i < 100; i++)
+            //{
+            //    Microsoft.Office.Interop.Excel.Range range = worksheet.get_Range("B" + i.ToString());
+            //    string cellValue = Convert.ToString(range.Cells.Value);
 
-                if (!string.IsNullOrWhiteSpace(cellValue))
-                {
-                    if (cellValue.Equals(excelCellMaladie))
-                    {
-                        excelCellMaladie = string.Format(excelColumnSubTotal, i);
-                    }
-                    else if (cellValue.Equals(excelCellCongesPayes))
-                    {
-                        excelCellCongesPayes = string.Format(excelColumnSubTotal, i);
-                    }
-                    else if (cellValue.Equals(excelCellFerie))
-                    {
-                        excelCellFerie = string.Format(excelColumnSubTotal, i);
-                    }
-                    else if (cellValue.Equals(excelCellCongesExceptionnels))
-                    {
-                        excelCellCongesExceptionnels = string.Format(excelColumnSubTotal, i);
-                    }
-                    else if (cellValue.Equals(excelCellFormation))
-                    {
-                        // ABO 22/03/2016
-                        excelCellFormation = string.Format(excelColumnSubTotal, i);
-                    }
-                }
-            }
+            //    if (!string.IsNullOrWhiteSpace(cellValue))
+            //    {
+            //        if (cellValue.Equals(excelCellMaladie))
+            //        {
+            //            excelCellMaladie = string.Format(excelColumnSubTotal, i);
+            //        }
+            //        else if (cellValue.Equals(excelCellCongesPayes))
+            //        {
+            //            excelCellCongesPayes = string.Format(excelColumnSubTotal, i);
+            //        }
+            //        else if (cellValue.Equals(excelCellFerie))
+            //        {
+            //            excelCellFerie = string.Format(excelColumnSubTotal, i);
+            //        }
+            //        else if (cellValue.Equals(excelCellCongesExceptionnels))
+            //        {
+            //            excelCellCongesExceptionnels = string.Format(excelColumnSubTotal, i);
+            //        }
+            //        else if (cellValue.Equals(excelCellFormation))
+            //        {
+            //            // ABO 22/03/2016
+            //            excelCellFormation = string.Format(excelColumnSubTotal, i);
+            //        }
+            //    }
+            //}
 
-            FATCount fatCount = new FATCount();
+            //FATCount fatCount = new FATCount();
 
-            Microsoft.Office.Interop.Excel.Range currentValue = worksheet.get_Range(excelCellTotal);
-            fatCount.GrandTotal = Convert.ToDouble(currentValue.Cells.Value);
+            //Microsoft.Office.Interop.Excel.Range currentValue = worksheet.get_Range(excelCellTotal);
+            //fatCount.GrandTotal = Convert.ToDouble(currentValue.Cells.Value);
 
-            currentValue = worksheet.get_Range(excelCellMaladie);
-            fatCount.TotalMaladie = Convert.ToDouble(currentValue.Cells.Value);
+            //currentValue = worksheet.get_Range(excelCellMaladie);
+            //fatCount.TotalMaladie = Convert.ToDouble(currentValue.Cells.Value);
 
-            currentValue = worksheet.get_Range(excelCellCongesPayes);
-            fatCount.TotalCongesPayes = Convert.ToDouble(currentValue.Cells.Value);
+            //currentValue = worksheet.get_Range(excelCellCongesPayes);
+            //fatCount.TotalCongesPayes = Convert.ToDouble(currentValue.Cells.Value);
 
-            currentValue = worksheet.get_Range(excelCellCongesExceptionnels);
-            fatCount.TotalCongesExceptionnels = Convert.ToDouble(currentValue.Cells.Value);
-            fatCount.TotalCongesPayes += fatCount.TotalCongesExceptionnels;
+            //currentValue = worksheet.get_Range(excelCellCongesExceptionnels);
+            //fatCount.TotalCongesExceptionnels = Convert.ToDouble(currentValue.Cells.Value);
+            //fatCount.TotalCongesPayes += fatCount.TotalCongesExceptionnels;
 
-            // ABO 22/03/2016
-            currentValue = worksheet.get_Range(excelCellFormation);
-            fatCount.TotalFormation = Convert.ToDouble(currentValue.Cells.Value);
-            fatCount.TotalCongesPayes += fatCount.TotalFormation;
+            //// ABO 22/03/2016
+            //currentValue = worksheet.get_Range(excelCellFormation);
+            //fatCount.TotalFormation = Convert.ToDouble(currentValue.Cells.Value);
+            //fatCount.TotalCongesPayes += fatCount.TotalFormation;
 
-            currentValue = worksheet.get_Range(excelCellFerie);
-            fatCount.TotalFerie = Convert.ToDouble(currentValue.Cells.Value);
+            //currentValue = worksheet.get_Range(excelCellFerie);
+            //fatCount.TotalFerie = Convert.ToDouble(currentValue.Cells.Value);
 
-            object MissValue = System.Reflection.Missing.Value;
-            // close FAT excel on bulbul
-            workbook.Close(false, MissValue, MissValue);
+            //object MissValue = System.Reflection.Missing.Value;
+            //// close FAT excel on bulbul
+            //workbook.Close(false, MissValue, MissValue);
 
-            // force kill the excel.exe process running like hell in the task manager !! :-)
-            KillProcessExcel(processId);
+            //// force kill the excel.exe process running like hell in the task manager !! :-)
+            //KillProcessExcel(processId);
 
-            return fatCount;
+            //return fatCount;
+
+            // TODO : 
+            return new FATCount();
         }
 
         /// <summary>
@@ -564,13 +567,13 @@ namespace Leaves_FAT_Management.UI
                 sbBody.Append("Cordialement,<br />");
                 sbBody.Append(ConfigurationManager.AppSettings["Name.Launcher"]);
 
-                // open ms outlook
-                Utility.OpenOutlookMail(
-                    ConfigurationManager.AppSettings["Email.BPO"],
-                    ConfigurationManager.AppSettings["Email.Director"],
-                    string.Format("FAT {0} - Equipe VIVOP", month),
-                    sbBody.ToString(),
-                    new string[] { zipFileName, fileNameTexte });
+                // TODO: open ms outlook
+                //Utility.OpenOutlookMail(
+                //    ConfigurationManager.AppSettings["Email.BPO"],
+                //    ConfigurationManager.AppSettings["Email.Director"],
+                //    string.Format("FAT {0} - Equipe VIVOP", month),
+                //    sbBody.ToString(),
+                //    new string[] { zipFileName, fileNameTexte });
             }
         }
         #endregion
@@ -687,13 +690,13 @@ namespace Leaves_FAT_Management.UI
                     sbBodyBPO.Append("Cordialement,<br />");
                     sbBodyBPO.Append(ConfigurationManager.AppSettings["Name.Launcher"]);
 
-                    // open ms outlook
-                    Utility.OpenOutlookMail(
-                        ConfigurationManager.AppSettings["Email.BPO"],
-                        ConfigurationManager.AppSettings["Email.Director"],
-                        string.Format("Absence {0}", ressourceCP[1]),
-                        sbBodyBPO.ToString(),
-                        null);
+                    // TODO: open ms outlook
+                    //Utility.OpenOutlookMail(
+                    //    ConfigurationManager.AppSettings["Email.BPO"],
+                    //    ConfigurationManager.AppSettings["Email.Director"],
+                    //    string.Format("Absence {0}", ressourceCP[1]),
+                    //    sbBodyBPO.ToString(),
+                    //    null);
                 }
 
                 if (checkBoxSendMail.Checked)
@@ -707,13 +710,13 @@ namespace Leaves_FAT_Management.UI
                     sbBodyCP.Append("Cordialement,<br />");
                     sbBodyCP.Append(ConfigurationManager.AppSettings["Name.Launcher"]);
 
-                    // open ms outlook
-                    Utility.OpenOutlookMail(
-                        ressourceCP[2],
-                        ressourceCP[3],
-                        string.Format("Absence {0}", ressourceCP[1]),
-                        sbBodyCP.ToString(),
-                        null);
+                    // TODO: open ms outlook
+                    //Utility.OpenOutlookMail(
+                    //    ressourceCP[2],
+                    //    ressourceCP[3],
+                    //    string.Format("Absence {0}", ressourceCP[1]),
+                    //    sbBodyCP.ToString(),
+                    //    null);
                 }
             }
         }

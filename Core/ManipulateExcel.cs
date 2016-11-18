@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Excel = Microsoft.Office.Interop.Excel;
+//using Excel = Microsoft.Office.Interop.Excel;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Configuration;
@@ -89,8 +89,8 @@ namespace Leaves_FAT_Management.Core
     /// </summary>
     public class ManipulateExcel
     {
-        private Excel.Application oExcelApp;
-        private Excel._Workbook oExcelWrkB;
+        //private Excel.Application oExcelApp;
+        //private Excel._Workbook oExcelWrkB;
         object MissValue = System.Reflection.Missing.Value;
         private int processId;
         private Process[] processBefore;
@@ -110,7 +110,7 @@ namespace Leaves_FAT_Management.Core
             //start EXCEL and get application object
             processId = 0;
             processBefore = Process.GetProcessesByName("EXCEL");
-            oExcelApp = new Excel.Application();
+            // TODO : oExcelApp = new Excel.Application();
             processAfter = Process.GetProcessesByName("EXCEL");
             
             // Parcourir les process apres création pour retrouver celui correspondant à cette instance
@@ -120,15 +120,15 @@ namespace Leaves_FAT_Management.Core
         /// <summary>
         /// Créez un nouveau "WorkBook"
         /// </summary>
-        public Excel._Workbook GetWorkBook(string sFilePath)
-        {
-            oExcelWrkB = (Excel._Workbook)(oExcelApp.Workbooks.Add(MissValue));
-            oExcelWrkB = oExcelApp.Workbooks.Open(
-                sFilePath, 0, true, 5, "", "", true, 
-                Microsoft.Office.Interop.Excel.XlPlatform.xlWindows,
-               "\t", false, false, 0, true);
-            return oExcelWrkB;
-        }
+        //public Excel._Workbook GetWorkBook(string sFilePath)
+        //{
+        //    oExcelWrkB = (Excel._Workbook)(oExcelApp.Workbooks.Add(MissValue));
+        //    oExcelWrkB = oExcelApp.Workbooks.Open(
+        //        sFilePath, 0, true, 5, "", "", true, 
+        //        Microsoft.Office.Interop.Excel.XlPlatform.xlWindows,
+        //       "\t", false, false, 0, true);
+        //    return oExcelWrkB;
+        //}
 
         /// <summary>
         /// Get the project Lot from project name
@@ -244,67 +244,67 @@ namespace Leaves_FAT_Management.Core
         /// <summary>
         /// Retrait des Dates de congés du fichier FAT
         /// </summary>
-        public string DateCongesInfoComplementaire(int iRowIndex, Excel.Worksheet oExcelWrkSheetfat, bool sprodV2)
-        {
-            StringBuilder dateConges = new StringBuilder();
-            string sFirstRow, sSecondRow;
-            Excel.Range range = oExcelWrkSheetfat.get_Range("A1");
+        //public string DateCongesInfoComplementaire(int iRowIndex, Excel.Worksheet oExcelWrkSheetfat, bool sprodV2)
+        //{
+        //    StringBuilder dateConges = new StringBuilder();
+        //    string sFirstRow, sSecondRow;
+        //    Excel.Range range = oExcelWrkSheetfat.get_Range("A1");
 
-            for (int icolIndex = 10; icolIndex <= 49; icolIndex++)
-            {
-                sFirstRow = (string)(range.Cells[iRowIndex, icolIndex] as Excel.Range).Text;
-                sSecondRow = (string)(range.Cells[iRowIndex + 1, icolIndex] as Excel.Range).Text;
+        //    for (int icolIndex = 10; icolIndex <= 49; icolIndex++)
+        //    {
+        //        sFirstRow = (string)(range.Cells[iRowIndex, icolIndex] as Excel.Range).Text;
+        //        sSecondRow = (string)(range.Cells[iRowIndex + 1, icolIndex] as Excel.Range).Text;
 
-                if (sFirstRow.Equals("x", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    dateConges.Append((string)(range.Cells[16, icolIndex] as Excel.Range).Text);
-                    dateConges.Append(csvCongesDelimiter);
-                }
-                else if (sSecondRow.Equals("x", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    dateConges.Append((string)(range.Cells[16, icolIndex] as Excel.Range).Text);
-                    dateConges.Append(csvCongesDelimiter);
-                }
-            }
+        //        if (sFirstRow.Equals("x", StringComparison.InvariantCultureIgnoreCase))
+        //        {
+        //            dateConges.Append((string)(range.Cells[16, icolIndex] as Excel.Range).Text);
+        //            dateConges.Append(csvCongesDelimiter);
+        //        }
+        //        else if (sSecondRow.Equals("x", StringComparison.InvariantCultureIgnoreCase))
+        //        {
+        //            dateConges.Append((string)(range.Cells[16, icolIndex] as Excel.Range).Text);
+        //            dateConges.Append(csvCongesDelimiter);
+        //        }
+        //    }
 
-            var dateFinal = dateConges.ToString().TrimEnd(csvCongesDelimiter).Trim();
+        //    var dateFinal = dateConges.ToString().TrimEnd(csvCongesDelimiter).Trim();
 
-            if (sprodV2)
-            {
-                // new format info_complémentaire = C{start_date}:C{end_date}
-                if (!String.IsNullOrEmpty(dateFinal))
-                {
-                    var values = dateFinal.Split(csvCongesDelimiter);
+        //    if (sprodV2)
+        //    {
+        //        // new format info_complémentaire = C{start_date}:C{end_date}
+        //        if (!String.IsNullOrEmpty(dateFinal))
+        //        {
+        //            var values = dateFinal.Split(csvCongesDelimiter);
 
-                    // format date for SPROD V2
-                    dateFinal = String.Format("C{0}:C{1}", values[0], values[values.Length - 1]);
-                }
-            }
+        //            // format date for SPROD V2
+        //            dateFinal = String.Format("C{0}:C{1}", values[0], values[values.Length - 1]);
+        //        }
+        //    }
 
-            return dateFinal;
-        }
+        //    return dateFinal;
+        //}
 
         /// <summary>
         /// Retrait du nombre totale de jours pour une activité 
         /// </summary>
-        public string NombreDeJour(Excel.Range sJour)
-        {
-            string sJourNombre = Convert.ToString(sJour.Text).Replace("j", "").Trim();
-            char[] cArray = sJourNombre.ToCharArray();
+        //public string NombreDeJour(Excel.Range sJour)
+        //{
+        //    string sJourNombre = Convert.ToString(sJour.Text).Replace("j", "").Trim();
+        //    char[] cArray = sJourNombre.ToCharArray();
 
-            for (int i = 0; i < cArray.Length; i++)
-            {
-                if (cArray[i] == '.')
-                {
-                    if (cArray[i + 1] == '0')
-                    {
-                        sJourNombre = "0";
-                        break;
-                    }
-                }
-            }
-            return sJourNombre.Trim();
-        }
+        //    for (int i = 0; i < cArray.Length; i++)
+        //    {
+        //        if (cArray[i] == '.')
+        //        {
+        //            if (cArray[i + 1] == '0')
+        //            {
+        //                sJourNombre = "0";
+        //                break;
+        //            }
+        //        }
+        //    }
+        //    return sJourNombre.Trim();
+        //}
 
         /// <summary>
         /// 
@@ -363,31 +363,31 @@ namespace Leaves_FAT_Management.Core
         /// <summary>
         /// Retraite de l'index du row d'un 'cell' spécifique
         /// </summary>
-        private int GetRowIndex(Excel._Worksheet oExcelWrkSheet, int iColIndex, string sCriteria)
-        {
-            int iRowIndex = 0;
-            Boolean bRowFound = false;
+        //private int GetRowIndex(Excel._Worksheet oExcelWrkSheet, int iColIndex, string sCriteria)
+        //{
+        //    int iRowIndex = 0;
+        //    Boolean bRowFound = false;
 
-            Excel.Range range = oExcelWrkSheet.get_Range("A1");
+        //    Excel.Range range = oExcelWrkSheet.get_Range("A1");
 
-            for (int iCol = 1; iCol <= iColIndex; iCol++)
-            {
-                for (int iRow = 1; iRow <= 100; iRow++)
-                {
-                    if ((string)(range.Cells[iRow, iCol] as Excel.Range).Text == sCriteria)
-                    {
-                        iRowIndex = iRow;
-                        bRowFound = true;
-                        break;
-                    }
-                }
-                if (bRowFound == true)
-                {
-                    break;
-                }
-            }
-            return iRowIndex + 1;
-        }
+        //    for (int iCol = 1; iCol <= iColIndex; iCol++)
+        //    {
+        //        for (int iRow = 1; iRow <= 100; iRow++)
+        //        {
+        //            if ((string)(range.Cells[iRow, iCol] as Excel.Range).Text == sCriteria)
+        //            {
+        //                iRowIndex = iRow;
+        //                bRowFound = true;
+        //                break;
+        //            }
+        //        }
+        //        if (bRowFound == true)
+        //        {
+        //            break;
+        //        }
+        //    }
+        //    return iRowIndex + 1;
+        //}
 
         /// <summary>
         /// Génération du fichier CSV SPROD ( d'imputation) depuis les données du fichier FAT
@@ -417,12 +417,12 @@ namespace Leaves_FAT_Management.Core
                 RessourceItem selectedItem = (RessourceItem)lstbxFileName.CheckedItems[itemCount];
 
                 string collaborateur = this.GetCollaborateur(selectedItem.ToString(), ldapUsername);
-                Excel._Workbook fichierFat = this.GetWorkBook(selectedItem.GetFileName());
+                //Excel._Workbook fichierFat = this.GetWorkBook(selectedItem.GetFileName());
 
-                fichierFat.CheckCompatibility = false;
-                Excel.Sheets worksheets = fichierFat.Worksheets;
-                Excel.Worksheet oExcelWrkSheetfat = (Microsoft.Office.Interop.Excel.Worksheet)worksheets.get_Item(3);
-                Excel.Range range;
+                //fichierFat.CheckCompatibility = false;
+                //Excel.Sheets worksheets = fichierFat.Worksheets;
+                //Excel.Worksheet oExcelWrkSheetfat = (Microsoft.Office.Interop.Excel.Worksheet)worksheets.get_Item(3);
+                //Excel.Range range;
 
                 // SAMPLE CSV
                 // dossier
@@ -443,148 +443,148 @@ namespace Leaves_FAT_Management.Core
                 //rjeanpierre;a;Maladie - C12;12 13 15;3
 
                 //Verifie les activités sur project
-                for (int j = 19; j < 52; j += 4)
-                {
-                    range = oExcelWrkSheetfat.get_Range(string.Format(excelCellNombreJour, j));
+                //for (int j = 19; j < 52; j += 4)
+                //{
+                //    range = oExcelWrkSheetfat.get_Range(string.Format(excelCellNombreJour, j));
 
-                    if (!string.IsNullOrWhiteSpace(Convert.ToString(range.Cells.Value)))
-                    {
-                        if (NombreDeJour(oExcelWrkSheetfat.get_Range(string.Format(excelCellNombreJour, j))) != "0")
-                        {
-                            // nom collaborateur
-                            sbSPRODcsv.Append(collaborateur).Append(csvDelimiter);
+                //    if (!string.IsNullOrWhiteSpace(Convert.ToString(range.Cells.Value)))
+                //    {
+                //        if (NombreDeJour(oExcelWrkSheetfat.get_Range(string.Format(excelCellNombreJour, j))) != "0")
+                //        {
+                //            // nom collaborateur
+                //            sbSPRODcsv.Append(collaborateur).Append(csvDelimiter);
 
-                            // dossier
-                            sbSPRODcsv.Append("d").Append(csvDelimiter);
+                //            // dossier
+                //            sbSPRODcsv.Append("d").Append(csvDelimiter);
 
-                            // get the complement d'info by project name / lot from FAT
-                            InfoComplement infoComplement = GetInfoComplementFromProject(
-                                collaborateur, 
-                                Convert.ToString(oExcelWrkSheetfat.get_Range(string.Format(excelCellClient, j - 1)).Text),
-                                Convert.ToString(oExcelWrkSheetfat.get_Range(string.Format(excelCellProject, j - 1)).Text));
+                //            // get the complement d'info by project name / lot from FAT
+                //            InfoComplement infoComplement = GetInfoComplementFromProject(
+                //                collaborateur, 
+                //                Convert.ToString(oExcelWrkSheetfat.get_Range(string.Format(excelCellClient, j - 1)).Text),
+                //                Convert.ToString(oExcelWrkSheetfat.get_Range(string.Format(excelCellProject, j - 1)).Text));
 
-                            // nom du projet ( base centralisée ASTEK pour V2)
-                            if (sprodV2)
-                            {
-                                sbSPRODcsv.Append(infoComplement.ProjectName).Append(csvDelimiter);
-                            }
-                            else
-                            {
-                                sbSPRODcsv.Append("FT VIVOP").Append(csvDelimiter);
-                            }
+                //            // nom du projet ( base centralisée ASTEK pour V2)
+                //            if (sprodV2)
+                //            {
+                //                sbSPRODcsv.Append(infoComplement.ProjectName).Append(csvDelimiter);
+                //            }
+                //            else
+                //            {
+                //                sbSPRODcsv.Append("FT VIVOP").Append(csvDelimiter);
+                //            }
 
-                            // type d'activité
-                            sbSPRODcsv.Append(
-                                GetActiviteFromLot(infoComplement.Lot)).Append(csvDelimiter);
+                //            // type d'activité
+                //            sbSPRODcsv.Append(
+                //                GetActiviteFromLot(infoComplement.Lot)).Append(csvDelimiter);
 
-                            // code projet¤info complémentaire (max. 2000 chars)                            
-                            if (sprodV2)
-                            {
-                                sbSPRODcsv.Append(
-                                    String.Concat(infoComplement.ProjectCode, csvSubDelimiter, infoComplement.Complement)).Append(csvDelimiter);
-                            }
-                            else
-                            {
-                                sbSPRODcsv.Append(infoComplement.Complement).Append(csvDelimiter);
-                            }
+                //            // code projet¤info complémentaire (max. 2000 chars)                            
+                //            if (sprodV2)
+                //            {
+                //                sbSPRODcsv.Append(
+                //                    String.Concat(infoComplement.ProjectCode, csvSubDelimiter, infoComplement.Complement)).Append(csvDelimiter);
+                //            }
+                //            else
+                //            {
+                //                sbSPRODcsv.Append(infoComplement.Complement).Append(csvDelimiter);
+                //            }
 
-                            // nombre de jours facturables
-                            sbSPRODcsv.Append(
-                                 NombreDeJour(oExcelWrkSheetfat.get_Range(string.Format(excelCellNombreJour, j)))).Append(csvDelimiter);
+                //            // nombre de jours facturables
+                //            sbSPRODcsv.Append(
+                //                 NombreDeJour(oExcelWrkSheetfat.get_Range(string.Format(excelCellNombreJour, j)))).Append(csvDelimiter);
 
-                            // support et mec => zéro
-                            sbSPRODcsv.AppendLine(csvDelimiter);
-                        }
-                    }
-                }
+                //            // support et mec => zéro
+                //            sbSPRODcsv.AppendLine(csvDelimiter);
+                //        }
+                //    }
+                //}
 
-                //Verifie les Absences et Formation
-                for (int i = 1; i < 100; i++)
-                {
-                    range = oExcelWrkSheetfat.get_Range("B" + i.ToString());
+                ////Verifie les Absences et Formation
+                //for (int i = 1; i < 100; i++)
+                //{
+                //    range = oExcelWrkSheetfat.get_Range("B" + i.ToString());
 
-                    string cellValue = Convert.ToString(range.Cells.Value);
+                //    string cellValue = Convert.ToString(range.Cells.Value);
 
-                    if (!string.IsNullOrWhiteSpace(cellValue) 
-                        && NombreDeJour(oExcelWrkSheetfat.get_Range(string.Format(excelCellNombreJour, i))) != "0"
-                        && (cellValue.Equals(excelCellFormation) || cellValue.Equals(excelCellMaladie) 
-                        || cellValue.Equals(excelCellCongesPayes) || cellValue.Equals(excelCellCongesExceptionnels)))
-                    {
-                        // nom collaborateur
-                        sbSPRODcsv.Append(collaborateur).Append(csvDelimiter);
+                //    if (!string.IsNullOrWhiteSpace(cellValue) 
+                //        && NombreDeJour(oExcelWrkSheetfat.get_Range(string.Format(excelCellNombreJour, i))) != "0"
+                //        && (cellValue.Equals(excelCellFormation) || cellValue.Equals(excelCellMaladie) 
+                //        || cellValue.Equals(excelCellCongesPayes) || cellValue.Equals(excelCellCongesExceptionnels)))
+                //    {
+                //        // nom collaborateur
+                //        sbSPRODcsv.Append(collaborateur).Append(csvDelimiter);
 
-                        // formation / mec générale
-                        if (cellValue.Equals(excelCellFormation))
-                        {
-                            // hors-dossier
-                            sbSPRODcsv.Append("hd").Append(csvDelimiter);
+                //        // formation / mec générale
+                //        if (cellValue.Equals(excelCellFormation))
+                //        {
+                //            // hors-dossier
+                //            sbSPRODcsv.Append("hd").Append(csvDelimiter);
 
-                            // type de hors-dossier
-                            sbSPRODcsv.Append("Formation Interne - A4").Append(csvDelimiter);
+                //            // type de hors-dossier
+                //            sbSPRODcsv.Append("Formation Interne - A4").Append(csvDelimiter);
 
-                            // type de formation
-                            sbSPRODcsv.Append(Convert.ToString(oExcelWrkSheetfat.get_Range(
-                                String.Format("B{0}", GetRowIndex(oExcelWrkSheetfat, 2, "Formation"))).Text)).Append(csvDelimiter);
-                        } // if formation
-                        else if (cellValue.Equals(excelCellMaladie)
-                            || cellValue.Equals(excelCellCongesPayes)
-                            || cellValue.Equals(excelCellCongesExceptionnels))
-                        {
-                            // absence
-                            sbSPRODcsv.Append("a").Append(csvDelimiter);
+                //            // type de formation
+                //            sbSPRODcsv.Append(Convert.ToString(oExcelWrkSheetfat.get_Range(
+                //                String.Format("B{0}", GetRowIndex(oExcelWrkSheetfat, 2, "Formation"))).Text)).Append(csvDelimiter);
+                //        } // if formation
+                //        else if (cellValue.Equals(excelCellMaladie)
+                //            || cellValue.Equals(excelCellCongesPayes)
+                //            || cellValue.Equals(excelCellCongesExceptionnels))
+                //        {
+                //            // absence
+                //            sbSPRODcsv.Append("a").Append(csvDelimiter);
 
-                            if (cellValue.Equals(excelCellMaladie))
-                            {
-                                // type de congé = Maladie
-                                if (sprodV2)
-                                {
-                                    sbSPRODcsv.Append(EnumClass.LMSLeave.SickLeave.GetDescription()).Append(csvDelimiter);
-                                }
-                                else
-                                {
-                                    sbSPRODcsv.Append("Maladie - C12").Append(csvDelimiter);
-                                }
+                //            if (cellValue.Equals(excelCellMaladie))
+                //            {
+                //                // type de congé = Maladie
+                //                if (sprodV2)
+                //                {
+                //                    sbSPRODcsv.Append(EnumClass.LMSLeave.SickLeave.GetDescription()).Append(csvDelimiter);
+                //                }
+                //                else
+                //                {
+                //                    sbSPRODcsv.Append("Maladie - C12").Append(csvDelimiter);
+                //                }
 
-                            }
-                            else if (cellValue.Equals(excelCellCongesPayes))
-                            {
-                                // type de congé = Congé payé
-                                if (sprodV2)
-                                {
-                                    sbSPRODcsv.Append(EnumClass.LMSLeave.AnnualLeave.GetDescription()).Append(csvDelimiter);
-                                }
-                                else
-                                {
-                                    sbSPRODcsv.Append("Congé payé - C8").Append(csvDelimiter);
-                                }
-                            }
-                            else if (cellValue.Equals(excelCellCongesExceptionnels))
-                            {
-                                // type de congé = Autres
-                                if (sprodV2)
-                                {
-                                    //  by default it's Maternity. For a guy we got a problem Houston !
-                                    sbSPRODcsv.Append(EnumClass.LMSLeave.SpecialLeave.GetDescription()).Append(csvDelimiter);
-                                }
-                                else
-                                {
-                                    sbSPRODcsv.Append("Absence exceptionnelle - C1").Append(csvDelimiter);
-                                }
-                            }
+                //            }
+                //            else if (cellValue.Equals(excelCellCongesPayes))
+                //            {
+                //                // type de congé = Congé payé
+                //                if (sprodV2)
+                //                {
+                //                    sbSPRODcsv.Append(EnumClass.LMSLeave.AnnualLeave.GetDescription()).Append(csvDelimiter);
+                //                }
+                //                else
+                //                {
+                //                    sbSPRODcsv.Append("Congé payé - C8").Append(csvDelimiter);
+                //                }
+                //            }
+                //            else if (cellValue.Equals(excelCellCongesExceptionnels))
+                //            {
+                //                // type de congé = Autres
+                //                if (sprodV2)
+                //                {
+                //                    //  by default it's Maternity. For a guy we got a problem Houston !
+                //                    sbSPRODcsv.Append(EnumClass.LMSLeave.SpecialLeave.GetDescription()).Append(csvDelimiter);
+                //                }
+                //                else
+                //                {
+                //                    sbSPRODcsv.Append("Absence exceptionnelle - C1").Append(csvDelimiter);
+                //                }
+                //            }
 
-                            // dates de congés
-                            sbSPRODcsv.Append(
-                                DateCongesInfoComplementaire(i, oExcelWrkSheetfat, sprodV2)).Append(csvDelimiter);
-                        } // else absence
+                //            // dates de congés
+                //            sbSPRODcsv.Append(
+                //                DateCongesInfoComplementaire(i, oExcelWrkSheetfat, sprodV2)).Append(csvDelimiter);
+                //        } // else absence
                         
-                        // nombre de jours de formation
-                        sbSPRODcsv.AppendLine(
-                             NombreDeJour(oExcelWrkSheetfat.get_Range(string.Format(excelCellNombreJour, i))));
-                    }
-                }
+                //        // nombre de jours de formation
+                //        sbSPRODcsv.AppendLine(
+                //             NombreDeJour(oExcelWrkSheetfat.get_Range(string.Format(excelCellNombreJour, i))));
+                //    }
+                //}
 
-                // close FAT excel on bulbul
-                fichierFat.Close(false, MissValue, MissValue);
+                //// close FAT excel on bulbul
+                //fichierFat.Close(false, MissValue, MissValue);
 
                 // reset text to -> OK
                 selectedItem.SetName(String.Format("{0} {1}", "OK ->", selectedItem.ToString()));
@@ -597,7 +597,7 @@ namespace Leaves_FAT_Management.Core
 
             // force kill the excel.exe process running like hell in the task manager !! :-)
             //MessageBox.Show(processId.ToString());
-            oExcelApp.Quit();
+            // TODO: oExcelApp.Quit();
             KillProcessExcel(processId);
 
             string csvContent = sbSPRODcsv.ToString();
