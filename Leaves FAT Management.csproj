@@ -40,6 +40,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -98,6 +99,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_main_repo\Ionic.Zip.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\_main_repo\NPOI.dll</HintPath>
     </Reference>
     <Reference Include="Org.Mentalis.Security">
       <HintPath>..\_main_repo\Org.Mentalis.Security.dll</HintPath>

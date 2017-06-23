@@ -89,11 +89,15 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.monthlyLeavesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backupDataViaFTPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.publicHolidaysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ressourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.createFATDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.encryptAESToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.monthlyLeavesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTextBoxInformation = new System.Windows.Forms.ToolStripTextBox();
@@ -102,10 +106,6 @@
             this.toolStripProgressBarMain = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabelSplitter = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelMain = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ressourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLeave)).BeginInit();
             this.tabControlMain.SuspendLayout();
             this.tabPageLeave.SuspendLayout();
@@ -465,6 +465,7 @@
             // 
             // buttonExportFAT
             // 
+            this.buttonExportFAT.Enabled = false;
             this.buttonExportFAT.Location = new System.Drawing.Point(460, 63);
             this.buttonExportFAT.Name = "buttonExportFAT";
             this.buttonExportFAT.Size = new System.Drawing.Size(129, 23);
@@ -721,7 +722,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -739,8 +740,15 @@
             this.encryptAESToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.ShowShortcutKeys = false;
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 23);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 23);
             this.toolsToolStripMenuItem.Text = "&Tools";
+            // 
+            // monthlyLeavesToolStripMenuItem
+            // 
+            this.monthlyLeavesToolStripMenuItem.Name = "monthlyLeavesToolStripMenuItem";
+            this.monthlyLeavesToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.monthlyLeavesToolStripMenuItem.Text = "&Monthly Leaves";
+            this.monthlyLeavesToolStripMenuItem.Click += new System.EventHandler(this.monthlyLeavesToolStripMenuItem_Click);
             // 
             // backupDataViaFTPToolStripMenuItem
             // 
@@ -749,12 +757,36 @@
             this.backupDataViaFTPToolStripMenuItem.Text = "&Backup via SFTP";
             this.backupDataViaFTPToolStripMenuItem.Click += new System.EventHandler(this.backupDataViaFTPToolStripMenuItem_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(157, 6);
+            // 
             // publicHolidaysToolStripMenuItem
             // 
             this.publicHolidaysToolStripMenuItem.Name = "publicHolidaysToolStripMenuItem";
             this.publicHolidaysToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.publicHolidaysToolStripMenuItem.Text = "&Public Holidays";
             this.publicHolidaysToolStripMenuItem.Click += new System.EventHandler(this.publicHolidaysToolStripMenuItem_Click);
+            // 
+            // projectToolStripMenuItem
+            // 
+            this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
+            this.projectToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.projectToolStripMenuItem.Text = "P&roject";
+            this.projectToolStripMenuItem.Click += new System.EventHandler(this.projectToolStripMenuItem_Click);
+            // 
+            // ressourceToolStripMenuItem
+            // 
+            this.ressourceToolStripMenuItem.Name = "ressourceToolStripMenuItem";
+            this.ressourceToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.ressourceToolStripMenuItem.Text = "Re&ssource";
+            this.ressourceToolStripMenuItem.Click += new System.EventHandler(this.ressourceToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(157, 6);
             // 
             // createFATDirectoryToolStripMenuItem
             // 
@@ -771,13 +803,6 @@
             this.encryptAESToolStripMenuItem.Text = "&Encrypt AES";
             this.encryptAESToolStripMenuItem.Click += new System.EventHandler(this.encryptAESToolStripMenuItem_Click);
             // 
-            // monthlyLeavesToolStripMenuItem
-            // 
-            this.monthlyLeavesToolStripMenuItem.Name = "monthlyLeavesToolStripMenuItem";
-            this.monthlyLeavesToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.monthlyLeavesToolStripMenuItem.Text = "&Monthly Leaves";
-            this.monthlyLeavesToolStripMenuItem.Click += new System.EventHandler(this.monthlyLeavesToolStripMenuItem_Click);
-            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -789,7 +814,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -840,30 +865,6 @@
             this.toolStripStatusLabelMain.Name = "toolStripStatusLabelMain";
             this.toolStripStatusLabelMain.Size = new System.Drawing.Size(0, 17);
             this.toolStripStatusLabelMain.TextChanged += new System.EventHandler(this.toolStripStatusLabelMain_TextChanged);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(157, 6);
-            // 
-            // projectToolStripMenuItem
-            // 
-            this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
-            this.projectToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.projectToolStripMenuItem.Text = "P&roject";
-            this.projectToolStripMenuItem.Click += new System.EventHandler(this.projectToolStripMenuItem_Click);
-            // 
-            // ressourceToolStripMenuItem
-            // 
-            this.ressourceToolStripMenuItem.Name = "ressourceToolStripMenuItem";
-            this.ressourceToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.ressourceToolStripMenuItem.Text = "Re&ssource";
-            this.ressourceToolStripMenuItem.Click += new System.EventHandler(this.ressourceToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(157, 6);
             // 
             // Main
             // 
