@@ -941,7 +941,7 @@ namespace Leaves_FAT_Management.UI
         private void buttonExportSPROD_Click(object sender, EventArgs e)
         {
             // disable all buttons
-            buttonExportSPROD.Enabled = buttonGetRessources.Enabled = false;
+            buttonExportSPROD.Enabled = buttonGetRessources.Enabled = buttonConsoRAF.Enabled = false;
 
             // clear error messages
             textBoxLogSPROD.Clear();
@@ -994,17 +994,6 @@ namespace Leaves_FAT_Management.UI
                     File.Copy(fileNameCSV, saveFileDialogSPROD.FileName, true);
 
                     LogMessage("Downloaded locally");
-
-                    //if (checkBoxSPRODV2.Checked)
-                    //{
-                    //    // open ms outlook
-                    //    Utility.OpenOutlookMail(
-                    //        "jahchong@astek.mu",
-                    //        String.Empty,
-                    //        "VIVOP - Validation SPROD pour ASPIN",
-                    //        "Bonjour Jeffrey, Je vais mettre les données sur SPROD V2, tu pourras valider les siennes sous peu. Anwar Buchoo.",
-                    //        null);
-                    //}
                 }
                 else
                 {
@@ -1021,13 +1010,13 @@ namespace Leaves_FAT_Management.UI
 
             // enable button
             buttonGetRessources.Enabled = true;
-            buttonExportSPROD.Enabled = !buttonGetRessources.Enabled;
+            buttonExportSPROD.Enabled = buttonConsoRAF.Enabled = !buttonGetRessources.Enabled;
         }
 
         protected void GetFatFileNameSPROD()
         {
             checkedListBoxRessource.Items.Clear();
-            buttonExportSPROD.Enabled = false;
+            buttonExportSPROD.Enabled = buttonConsoRAF.Enabled = false;
             string sName = string.Empty;
             int countFAT = 0;
 
@@ -1066,7 +1055,7 @@ namespace Leaves_FAT_Management.UI
             }
             else
             {
-                buttonExportSPROD.Enabled = true;
+                buttonExportSPROD.Enabled = buttonConsoRAF.Enabled = checkBoxSelectAllSPROD.Checked = true;
             }
         }
 
@@ -1329,6 +1318,80 @@ namespace Leaves_FAT_Management.UI
         private void ressourceToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void buttonConsoRAF_Click(object sender, EventArgs e)
+        {
+            ManipulateExcel excel = new ManipulateExcel();
+
+            // data structure
+            DataTable dt = new DataTable("ConsoRAF");
+            dt.Columns.Add("Name", typeof(string));
+            dt.Columns.Add("Project", typeof(string));
+            dt.Columns.Add("Days", typeof(float));
+            
+            // generate CSV file
+            string consoRAFCSV = excel.GenerateSPRODCSV(
+                checkedListBoxRessource, textBoxLogSPROD, true, true);
+
+            //abuchoo;d;Vivop;Développement;VIVOP3 - ASPIN - G4R0C7 - LOT 6||VIVOP3-ASPIN-G4R0C7-LOT6;5;;
+            foreach (var line in consoRAFCSV.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                string[] subItems = line.Split(excel.CSVDelimiter[0]);                       
+
+                // add new row to datatable
+                DataRow dr = dt.NewRow();
+                dr["Name"] = subItems[0];
+                dr["Project"] = subItems[4].Split(new string[] { excel.CSVSubDelimiter }, StringSplitOptions.RemoveEmptyEntries)[1];
+                dr["Days"] = subItems[5];
+
+                dt.Rows.Add(dr);
+            }
+
+            ConsoRAF consoRAF = new ConsoRAF();
+
+            consoRAF.dataGridViewConsoRAF.DataSource = dt;
+
+            // show Modal Dialog
+            consoRAF.ShowDialog(this);
+        }
+
+        private void checkBoxSelectAllSPROD_CheckedChanged(object sender, EventArgs e)
+        {
+            // select all items
+            for (int i = 0; i < checkedListBoxRessource.Items.Count; i++)
+            {
+                checkedListBoxRessource.SetItemChecked(i, checkBoxSelectAllSPROD.Checked);
+            }
+
+            buttonExportSPROD.Enabled = buttonConsoRAF.Enabled = checkBoxSelectAllSPROD.Checked;
+            if (checkBoxSelectAllSPROD.Checked)
+            {
+                checkBoxProjetsMOED.Checked = false;
+            }
+        }
+
+        private void checkBoxProjetsMOED_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxProjetsMOED.Checked)
+            {
+                checkBoxSelectAllSPROD.Checked = false;
+            }
+
+            buttonExportSPROD.Enabled = buttonConsoRAF.Enabled = checkBoxProjetsMOED.Checked;
+
+            // select all ressources in MOE-Déléguée projects (ASPI/SPID/SCOOP/SICLOP)
+            for (int i = 0; i < checkedListBoxRessource.Items.Count; i++)
+            {
+                var filename = ((RessourceItem)checkedListBoxRessource.Items[i]).ToString().ToLower();
+
+                if ((filename.Contains("buchoo")
+                    || filename.Contains("foo")
+                    || filename.Contains("maregadee")))
+                {
+                    checkedListBoxRessource.SetItemChecked(i, checkBoxProjetsMOED.Checked);
+                }
+            }
         }
     }
 

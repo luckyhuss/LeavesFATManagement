@@ -74,6 +74,9 @@
             this.dateTimePickerFATMonth = new System.Windows.Forms.DateTimePicker();
             this.tabPageSPROD = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkBoxProjetsMOED = new System.Windows.Forms.CheckBox();
+            this.checkBoxSelectAllSPROD = new System.Windows.Forms.CheckBox();
+            this.buttonConsoRAF = new System.Windows.Forms.Button();
             this.checkBoxSPRODV2 = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.textBoxLogSPROD = new System.Windows.Forms.TextBox();
@@ -465,7 +468,6 @@
             // 
             // buttonExportFAT
             // 
-            this.buttonExportFAT.Enabled = false;
             this.buttonExportFAT.Location = new System.Drawing.Point(460, 63);
             this.buttonExportFAT.Name = "buttonExportFAT";
             this.buttonExportFAT.Size = new System.Drawing.Size(129, 23);
@@ -582,11 +584,14 @@
             this.tabPageSPROD.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageSPROD.Size = new System.Drawing.Size(523, 550);
             this.tabPageSPROD.TabIndex = 2;
-            this.tabPageSPROD.Text = "SPROD";
+            this.tabPageSPROD.Text = "SPROD / RAF";
             this.tabPageSPROD.UseVisualStyleBackColor = true;
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.checkBoxProjetsMOED);
+            this.groupBox3.Controls.Add(this.checkBoxSelectAllSPROD);
+            this.groupBox3.Controls.Add(this.buttonConsoRAF);
             this.groupBox3.Controls.Add(this.checkBoxSPRODV2);
             this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Controls.Add(this.textBoxLogSPROD);
@@ -601,11 +606,45 @@
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             // 
+            // checkBoxProjetsMOED
+            // 
+            this.checkBoxProjetsMOED.AutoSize = true;
+            this.checkBoxProjetsMOED.Location = new System.Drawing.Point(354, 12);
+            this.checkBoxProjetsMOED.Name = "checkBoxProjetsMOED";
+            this.checkBoxProjetsMOED.Size = new System.Drawing.Size(90, 17);
+            this.checkBoxProjetsMOED.TabIndex = 24;
+            this.checkBoxProjetsMOED.Text = "projets MOEd";
+            this.checkBoxProjetsMOED.UseVisualStyleBackColor = true;
+            this.checkBoxProjetsMOED.CheckedChanged += new System.EventHandler(this.checkBoxProjetsMOED_CheckedChanged);
+            // 
+            // checkBoxSelectAllSPROD
+            // 
+            this.checkBoxSelectAllSPROD.AutoSize = true;
+            this.checkBoxSelectAllSPROD.Location = new System.Drawing.Point(165, 13);
+            this.checkBoxSelectAllSPROD.Name = "checkBoxSelectAllSPROD";
+            this.checkBoxSelectAllSPROD.Size = new System.Drawing.Size(67, 17);
+            this.checkBoxSelectAllSPROD.TabIndex = 23;
+            this.checkBoxSelectAllSPROD.Text = "select all";
+            this.checkBoxSelectAllSPROD.UseVisualStyleBackColor = true;
+            this.checkBoxSelectAllSPROD.CheckedChanged += new System.EventHandler(this.checkBoxSelectAllSPROD_CheckedChanged);
+            // 
+            // buttonConsoRAF
+            // 
+            this.buttonConsoRAF.Enabled = false;
+            this.buttonConsoRAF.Location = new System.Drawing.Point(9, 107);
+            this.buttonConsoRAF.Name = "buttonConsoRAF";
+            this.buttonConsoRAF.Size = new System.Drawing.Size(150, 23);
+            this.buttonConsoRAF.TabIndex = 22;
+            this.buttonConsoRAF.Text = "Conso / RAF";
+            this.buttonConsoRAF.UseVisualStyleBackColor = true;
+            this.buttonConsoRAF.Click += new System.EventHandler(this.buttonConsoRAF_Click);
+            // 
             // checkBoxSPRODV2
             // 
             this.checkBoxSPRODV2.AutoSize = true;
             this.checkBoxSPRODV2.Checked = true;
             this.checkBoxSPRODV2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxSPRODV2.Enabled = false;
             this.checkBoxSPRODV2.Location = new System.Drawing.Point(9, 32);
             this.checkBoxSPRODV2.Name = "checkBoxSPRODV2";
             this.checkBoxSPRODV2.Size = new System.Drawing.Size(67, 17);
@@ -616,7 +655,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 104);
+            this.label11.Location = new System.Drawing.Point(6, 133);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(31, 13);
             this.label11.TabIndex = 20;
@@ -626,20 +665,20 @@
             // 
             this.textBoxLogSPROD.BackColor = System.Drawing.Color.White;
             this.textBoxLogSPROD.ForeColor = System.Drawing.Color.Green;
-            this.textBoxLogSPROD.Location = new System.Drawing.Point(9, 120);
+            this.textBoxLogSPROD.Location = new System.Drawing.Point(9, 149);
             this.textBoxLogSPROD.Multiline = true;
             this.textBoxLogSPROD.Name = "textBoxLogSPROD";
             this.textBoxLogSPROD.ReadOnly = true;
             this.textBoxLogSPROD.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxLogSPROD.Size = new System.Drawing.Size(150, 272);
+            this.textBoxLogSPROD.Size = new System.Drawing.Size(150, 243);
             this.textBoxLogSPROD.TabIndex = 19;
             // 
             // checkedListBoxRessource
             // 
             this.checkedListBoxRessource.FormattingEnabled = true;
-            this.checkedListBoxRessource.Location = new System.Drawing.Point(165, 13);
+            this.checkedListBoxRessource.Location = new System.Drawing.Point(165, 43);
             this.checkedListBoxRessource.Name = "checkedListBoxRessource";
-            this.checkedListBoxRessource.Size = new System.Drawing.Size(279, 379);
+            this.checkedListBoxRessource.Size = new System.Drawing.Size(279, 349);
             this.checkedListBoxRessource.TabIndex = 18;
             this.checkedListBoxRessource.SelectedIndexChanged += new System.EventHandler(this.checkedListBoxRessource_SelectedIndexChanged);
             this.checkedListBoxRessource.SelectedValueChanged += new System.EventHandler(this.checkedListBoxRessource_SelectedValueChanged);
@@ -985,6 +1024,9 @@
         private System.Windows.Forms.ToolStripMenuItem projectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ressourceToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.Button buttonConsoRAF;
+        private System.Windows.Forms.CheckBox checkBoxSelectAllSPROD;
+        private System.Windows.Forms.CheckBox checkBoxProjetsMOED;
     }
 }
 

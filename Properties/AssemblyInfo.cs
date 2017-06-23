@@ -10,8 +10,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Astek (Mauritius) Ltd")]
 [assembly: AssemblyProduct("Leaves FAT Management (.NET 4.0)")]
-[assembly: AssemblyCopyright("Copyright © VIVOP (2008-2016)")]
-[assembly: AssemblyTrademark("Copyright © VIVOP (2008-2016)")]
+[assembly: AssemblyCopyright("Copyright © VIVOP (2008-2017)")]
+[assembly: AssemblyTrademark("Copyright © VIVOP (2008-2017)")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("6.8.0.0")]
-[assembly: AssemblyFileVersion("6.8.0.0")]
+[assembly: AssemblyVersion("7.0.0.0")]
+[assembly: AssemblyFileVersion("7.0.0.0")]

@@ -94,12 +94,7 @@ namespace Leaves_FAT_Management.Core
     /// </summary>
     public class ManipulateExcel
     {
-        //private Excel.Application oExcelApp;
-        //private Excel._Workbook oExcelWrkB;
-        object MissValue = System.Reflection.Missing.Value;
-        private int processId;
-        private Process[] processBefore;
-        private Process[] processAfter;
+        private object MissValue = System.Reflection.Missing.Value;
         private string[] fatNameDelimiter = { "_" };
 
         // CSV manipulation
@@ -120,6 +115,22 @@ namespace Leaves_FAT_Management.Core
             
             //// Parcourir les process apres création pour retrouver celui correspondant à cette instance
             //processId = GetProcessIDExcel(processBefore, processAfter);
+        }
+
+        public string CSVDelimiter
+        {
+            get
+            {
+                return csvDelimiter;
+            }
+        }
+
+        public string CSVSubDelimiter
+        {
+            get
+            {
+                return csvSubDelimiter;
+            }
         }
 
         /// <summary>
@@ -341,7 +352,7 @@ namespace Leaves_FAT_Management.Core
         /// <param name="lstbxFileName">List des fichiers FAT trouvées sur \\merle</param>
         /// <param name="textBoxLogSPROD">Texte de log à mettre à jour pendant l'exécution</param>
         /// <returns></returns>
-        public string GenerateSPRODCSV(CheckedListBox lstbxFileName, TextBox textBoxLogSPROD, bool sprodV2)
+        public string GenerateSPRODCSV(CheckedListBox lstbxFileName, TextBox textBoxLogSPROD, bool sprodV2, bool consoRaf = false)
         {
             string excelCellMaladie = ConfigurationManager.AppSettings["ExcelCellMaladie"]; // Maladie
             string excelCellCongesPayes = ConfigurationManager.AppSettings["ExcelCellCongesPayes"]; // Congés payés        
@@ -352,7 +363,7 @@ namespace Leaves_FAT_Management.Core
             string excelCellClient = ConfigurationManager.AppSettings["ExcelCellClient"]; // Client name
 
             StringBuilder sbSPRODcsv = new StringBuilder();
-            
+
             // load LDAP username
             Dictionary<string, string> ldapUsername = new Dictionary<string, string>();
             // select uppercased NAME and lowercase ldap_username
@@ -368,32 +379,24 @@ namespace Leaves_FAT_Management.Core
 
                 if (oExcelWrkSheetfat == null)
                 {
-                    // TODO 22/06/17
-                    //MessageBox.Show(this, String.Format("Sheet does not exist"), "Excel error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //return;
+                    // NPOI 22/06/17
+                    throw new Exception("Excel worksheet 'analyse' not found");
                 }
 
-                // SAMPLE CSV
-                // dossier
-                //username;type_dossier;nom_projet;type_d'activité;code_projet¤info_complémentaire;jours_factu;jours_support;jours_mec
-                // code_projet = Projet ou Lot depuis la FAT
-                // info_complémentaire = Projet ou Lot retravaillé
-                // hors-dossier ( formation)
-                //username;type_dossier;type_d'activité;info_complémentaire;jours_nonfactu
-                // info_complémentaire = description de la formation
-                // absence
-                //username;type_dossier;type_d'absence;info_complémentaire;jours_absence
-                // info_complémentaire = C{start_date}:C{end_date}
+                #region SAMPLE CSV
+                                
+                //   abuchoo;d;Vivop;Evolution;VIVOP3 - ASPIN - G4R1C0 - LOT 5||VIVOP3-ASPIN-G4R1C0-LOT5;7;;
+                //   abuchoo;d;Vivop;Développement;VIVOP3 - ASPIN - G4R0C7 - LOT 6||VIVOP3-ASPIN-G4R0C7-LOT6;5;;
+                //   abuchoo;d;Vivop;Soutien;VIVOP3 DSM VASTA - Lot 2.3||VIVOP3-DSM-VASTA-LOT2.3;4;;
+                //   abuchoo;d;Vivop;Soutien;VIVOP3 - SPID - LOT 2.1||VIVOP3-SPID-LOT2.1;0.5;;
+                //   abuchoo;d;Vivop;Développement;VIVOP3 PILPRO G4R7 Lot6||VIVOP3-PILPRO-G4R7-LOT6;2.5;;
+                //   abuchoo;a;annual-leave;C27:C28;2
 
-                //jahchong;d;FT VIVOP;Evolution majeure / Projet;VIO G9R8C1;3;;
-                //simrith;hd;Formation Interne - A4;Java;4
-                //rjeanpierre;a;Maladie - C12;1 - 9 15;8
-                //abuchoo;d;FT VIVOP;Evolution majeure / Projet;ORCO G2R0;20;;
-                //rjeanpierre;a;Maladie - C12;12 13 15;3
+                #endregion
 
                 string cellValue;
 
-                //Verifie les activités sur project
+                //Verifie les activités sur projet
                 for (int j = 19; j < 52; j += 4)
                 {
                     cellValue = GetCellValue(oExcelWrkSheetfat, string.Format(excelCellNombreJour, j));
@@ -449,108 +452,104 @@ namespace Leaves_FAT_Management.Core
                     }
                 }
 
-                //Verifie les Absences et Formation
-                for (int i = 1; i <= oExcelWrkSheetfat.LastRowNum; i++)
+                if (!consoRaf)
                 {
-                    cellValue = GetCellValue(oExcelWrkSheetfat, "B" + i.ToString());
-
-                    if (!string.IsNullOrWhiteSpace(cellValue)
-                        && NombreDeJour(GetCellValue(oExcelWrkSheetfat, string.Format(excelCellNombreJour, i))) != "0"
-                        && (cellValue.Equals(excelCellFormation) || cellValue.Equals(excelCellMaladie)
-                        || cellValue.Equals(excelCellCongesPayes) || cellValue.Equals(excelCellCongesExceptionnels)))
+                    //Verifie les Absences et Formation
+                    for (int i = 1; i <= oExcelWrkSheetfat.LastRowNum; i++)
                     {
-                        // nom collaborateur
-                        sbSPRODcsv.Append(collaborateur).Append(csvDelimiter);
+                        cellValue = GetCellValue(oExcelWrkSheetfat, "B" + i.ToString());
 
-                        // formation / mec générale
-                        if (cellValue.Equals(excelCellFormation))
+                        if (!string.IsNullOrWhiteSpace(cellValue)
+                            && NombreDeJour(GetCellValue(oExcelWrkSheetfat, string.Format(excelCellNombreJour, i))) != "0"
+                            && (cellValue.Equals(excelCellFormation) || cellValue.Equals(excelCellMaladie)
+                            || cellValue.Equals(excelCellCongesPayes) || cellValue.Equals(excelCellCongesExceptionnels)))
                         {
-                            // hors-dossier
-                            sbSPRODcsv.Append("hd").Append(csvDelimiter);
+                            // nom collaborateur
+                            sbSPRODcsv.Append(collaborateur).Append(csvDelimiter);
 
-                            // type de hors-dossier
-                            sbSPRODcsv.Append("Formation Interne - A4").Append(csvDelimiter);
-
-                            // type de formation
-                            sbSPRODcsv.Append(GetCellValue(oExcelWrkSheetfat,
-                                string.Format("B{0}", GetRowIndex(oExcelWrkSheetfat, "B", "Formation")))).Append(csvDelimiter);
-                        } // if formation
-                        else if (cellValue.Equals(excelCellMaladie)
-                            || cellValue.Equals(excelCellCongesPayes)
-                            || cellValue.Equals(excelCellCongesExceptionnels))
-                        {
-                            // absence
-                            sbSPRODcsv.Append("a").Append(csvDelimiter);
-
-                            if (cellValue.Equals(excelCellMaladie))
+                            // formation / mec générale
+                            if (cellValue.Equals(excelCellFormation))
                             {
-                                // type de congé = Maladie
-                                if (sprodV2)
-                                {
-                                    sbSPRODcsv.Append(EnumClass.LMSLeave.SickLeave.GetDescription()).Append(csvDelimiter);
-                                }
-                                else
-                                {
-                                    sbSPRODcsv.Append("Maladie - C12").Append(csvDelimiter);
-                                }
+                                // hors-dossier
+                                sbSPRODcsv.Append("hd").Append(csvDelimiter);
 
-                            }
-                            else if (cellValue.Equals(excelCellCongesPayes))
+                                // type de hors-dossier
+                                sbSPRODcsv.Append("Formation Interne - A4").Append(csvDelimiter);
+
+                                // type de formation
+                                sbSPRODcsv.Append(GetCellValue(oExcelWrkSheetfat,
+                                    string.Format("B{0}", GetRowIndex(oExcelWrkSheetfat, "B", "Formation")))).Append(csvDelimiter);
+                            } // if formation
+                            else if (cellValue.Equals(excelCellMaladie)
+                                || cellValue.Equals(excelCellCongesPayes)
+                                || cellValue.Equals(excelCellCongesExceptionnels))
                             {
-                                // type de congé = Congé payé
-                                if (sprodV2)
-                                {
-                                    sbSPRODcsv.Append(EnumClass.LMSLeave.AnnualLeave.GetDescription()).Append(csvDelimiter);
-                                }
-                                else
-                                {
-                                    sbSPRODcsv.Append("Congé payé - C8").Append(csvDelimiter);
-                                }
-                            }
-                            else if (cellValue.Equals(excelCellCongesExceptionnels))
-                            {
-                                // type de congé = Autres
-                                if (sprodV2)
-                                {
-                                    //  by default it's Maternity. For a guy we got a problem Houston !
-                                    sbSPRODcsv.Append(EnumClass.LMSLeave.SpecialLeave.GetDescription()).Append(csvDelimiter);
-                                }
-                                else
-                                {
-                                    sbSPRODcsv.Append("Absence exceptionnelle - C1").Append(csvDelimiter);
-                                }
-                            }
+                                // absence
+                                sbSPRODcsv.Append("a").Append(csvDelimiter);
 
-                            // dates de congés
-                            sbSPRODcsv.Append(
-                                DateCongesInfoComplementaire(i - 1, oExcelWrkSheetfat, sprodV2)).Append(csvDelimiter);
-                        } // else absence
+                                if (cellValue.Equals(excelCellMaladie))
+                                {
+                                    // type de congé = Maladie
+                                    if (sprodV2)
+                                    {
+                                        sbSPRODcsv.Append(EnumClass.LMSLeave.SickLeave.GetDescription()).Append(csvDelimiter);
+                                    }
+                                    else
+                                    {
+                                        sbSPRODcsv.Append("Maladie - C12").Append(csvDelimiter);
+                                    }
 
-                        // nombre de jours de formation
-                        sbSPRODcsv.AppendLine(
-                             NombreDeJour(GetCellValue(oExcelWrkSheetfat, string.Format(excelCellNombreJour, i))));
+                                }
+                                else if (cellValue.Equals(excelCellCongesPayes))
+                                {
+                                    // type de congé = Congé payé
+                                    if (sprodV2)
+                                    {
+                                        sbSPRODcsv.Append(EnumClass.LMSLeave.AnnualLeave.GetDescription()).Append(csvDelimiter);
+                                    }
+                                    else
+                                    {
+                                        sbSPRODcsv.Append("Congé payé - C8").Append(csvDelimiter);
+                                    }
+                                }
+                                else if (cellValue.Equals(excelCellCongesExceptionnels))
+                                {
+                                    // type de congé = Autres
+                                    if (sprodV2)
+                                    {
+                                        //  by default it's Maternity. For a guy we got a problem Houston !
+                                        sbSPRODcsv.Append(EnumClass.LMSLeave.SpecialLeave.GetDescription()).Append(csvDelimiter);
+                                    }
+                                    else
+                                    {
+                                        sbSPRODcsv.Append("Absence exceptionnelle - C1").Append(csvDelimiter);
+                                    }
+                                }
+
+                                // dates de congés
+                                sbSPRODcsv.Append(
+                                    DateCongesInfoComplementaire(i - 1, oExcelWrkSheetfat, sprodV2)).Append(csvDelimiter);
+                            } // else absence
+
+                            // nombre de jours de formation
+                            sbSPRODcsv.AppendLine(
+                                 NombreDeJour(GetCellValue(oExcelWrkSheetfat, string.Format(excelCellNombreJour, i))));
+                        }
                     }
                 }
-
-                // close FAT excel on bulbul
-                //fichierFat.Close(false, MissValue, MissValue);
 
                 // reset text to -> OK
                 selectedItem.SetName(String.Format("{0} {1}", "OK ->", selectedItem.ToString()));
                 int currentIndex = lstbxFileName.Items.IndexOf(selectedItem);
                 LogMessage(
-                    String.Format("{0:00}/{1:00} FAT extracted", currentIndex + 1, lstbxFileName.Items.Count), 
+                    String.Format("{0:00}/{1:00} FAT extracted", currentIndex + 1, lstbxFileName.Items.Count),
                     textBoxLogSPROD);
                 lstbxFileName.Items[currentIndex] = selectedItem;
             }
 
-            // force kill the excel.exe process running like hell in the task manager !! :-)
-            //MessageBox.Show(processId.ToString());
-            // TODO: oExcelApp.Quit();
-            // KillProcessExcel(processId);
-            
             string csvContent = sbSPRODcsv.ToString();
             csvContent = csvContent.Substring(0, csvContent.LastIndexOf("\r\n"));
+
             return csvContent;
         }
 
