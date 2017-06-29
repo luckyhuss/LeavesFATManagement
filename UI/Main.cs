@@ -1010,7 +1010,6 @@ namespace Leaves_FAT_Management.UI
 
             // enable button
             buttonGetRessources.Enabled = true;
-            buttonExportSPROD.Enabled = buttonConsoRAF.Enabled = !buttonGetRessources.Enabled;
         }
 
         protected void GetFatFileNameSPROD()
@@ -1322,6 +1321,14 @@ namespace Leaves_FAT_Management.UI
 
         private void buttonConsoRAF_Click(object sender, EventArgs e)
         {
+            // disable all buttons
+            buttonExportSPROD.Enabled = buttonGetRessources.Enabled = buttonConsoRAF.Enabled = false;
+            
+            // clear error messages
+            textBoxLogSPROD.Clear();
+            textBoxLogSPROD.ForeColor = Color.Green;
+            LogMessage("=== START ===");
+
             ManipulateExcel excel = new ManipulateExcel();
 
             // data structure
@@ -1354,6 +1361,9 @@ namespace Leaves_FAT_Management.UI
 
             // show Modal Dialog
             consoRAF.ShowDialog(this);
+
+            // enable button
+            buttonGetRessources.Enabled = true;
         }
 
         private void checkBoxSelectAllSPROD_CheckedChanged(object sender, EventArgs e)

@@ -45,20 +45,23 @@ namespace Leaves_FAT_Management.UI
 
             var previousVal = string.Empty;
             Color previousColor = Color.Empty;
-
+            
             // change colors
             foreach (DataGridViewRow dgvr in dataGridViewConsoRAF.Rows)
             {
+                // set font to white
+                dgvr.DefaultCellStyle.ForeColor = Color.WhiteSmoke;
+
                 if (previousVal.Equals(dgvr.Cells["Project"].Value))
                 {
                     // get previous color
-                    dgvr.DefaultCellStyle.ForeColor = previousColor;
+                    dgvr.DefaultCellStyle.BackColor = previousColor;
                 }
                 else
                 {
                     // get a new color
                     previousColor = GetNewColor();
-                    dgvr.DefaultCellStyle.ForeColor = previousColor;
+                    dgvr.DefaultCellStyle.BackColor = previousColor;
                 }
 
                 // set previous Project
@@ -70,7 +73,7 @@ namespace Leaves_FAT_Management.UI
 
         private Color GetNewColor()
         {
-            return Color.FromArgb(r.Next(0, 256), r.Next(0, 256), r.Next(0, 256));
+            return Color.FromArgb(r.Next(50, 200), r.Next(50, 200), r.Next(50, 200));
         }
     }
 }
