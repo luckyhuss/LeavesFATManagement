@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonCreate = new System.Windows.Forms.Button();
             this.dataGridViewConsoRAF = new System.Windows.Forms.DataGridView();
@@ -37,7 +37,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(197, 291);
+            this.buttonCancel.Location = new System.Drawing.Point(221, 342);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 5;
@@ -47,7 +47,8 @@
             // 
             // buttonCreate
             // 
-            this.buttonCreate.Location = new System.Drawing.Point(100, 291);
+            this.buttonCreate.Enabled = false;
+            this.buttonCreate.Location = new System.Drawing.Point(98, 342);
             this.buttonCreate.Name = "buttonCreate";
             this.buttonCreate.Size = new System.Drawing.Size(75, 23);
             this.buttonCreate.TabIndex = 2;
@@ -62,22 +63,24 @@
             this.dataGridViewConsoRAF.AllowUserToOrderColumns = true;
             this.dataGridViewConsoRAF.AllowUserToResizeRows = false;
             this.dataGridViewConsoRAF.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewConsoRAF.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewConsoRAF.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewConsoRAF.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewConsoRAF.Location = new System.Drawing.Point(12, 12);
             this.dataGridViewConsoRAF.Name = "dataGridViewConsoRAF";
             this.dataGridViewConsoRAF.ReadOnly = true;
             this.dataGridViewConsoRAF.RowHeadersVisible = false;
-            this.dataGridViewConsoRAF.Size = new System.Drawing.Size(361, 273);
+            this.dataGridViewConsoRAF.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dataGridViewConsoRAF.Size = new System.Drawing.Size(367, 324);
             this.dataGridViewConsoRAF.TabIndex = 6;
             this.dataGridViewConsoRAF.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridViewConsoRAF_DataBindingComplete);
+            this.dataGridViewConsoRAF.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dataGridViewConsoRAF_MouseUp);
             // 
             // ConsoRAF
             // 
@@ -85,7 +88,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(388, 326);
+            this.ClientSize = new System.Drawing.Size(393, 377);
             this.Controls.Add(this.dataGridViewConsoRAF);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonCreate);

@@ -582,7 +582,7 @@ namespace Leaves_FAT_Management.Core
             // TODO : add forename too to the dictionary key in case surname might not be unique one day (12/12/2013)
 
             // get LDAP Username from database
-            if (!String.IsNullOrEmpty(ldapUsername[surname]))
+            if (!string.IsNullOrEmpty(ldapUsername[surname]))
             {
                 ldapName = ldapUsername[surname];
             }
