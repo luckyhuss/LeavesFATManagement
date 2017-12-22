@@ -1344,15 +1344,24 @@ namespace Leaves_FAT_Management.UI
             //abuchoo;d;Vivop;Développement;VIVOP3 - ASPIN - G4R0C7 - LOT 6||VIVOP3-ASPIN-G4R0C7-LOT6;5;;
             foreach (var line in consoRAFCSV.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
             {
-                string[] subItems = line.Split(excel.CSVDelimiter[0]);                       
+                var value = string.Empty;
+                try
+                {
+                    string[] subItems = line.Split(excel.CSVDelimiter[0]);
+                    value = subItems[0];
 
-                // add new row to datatable
-                DataRow dr = dt.NewRow();
-                dr["Name"] = subItems[0];
-                dr["Project"] = subItems[4].Split(new string[] { excel.CSVSubDelimiter }, StringSplitOptions.RemoveEmptyEntries)[1];
-                dr["Days"] = subItems[5];
+                    // add new row to datatable
+                    DataRow dr = dt.NewRow();
+                    dr["Name"] = subItems[0];
+                    dr["Project"] = subItems[4].Split(new string[] { excel.CSVSubDelimiter }, StringSplitOptions.RemoveEmptyEntries)[1];
+                    dr["Days"] = subItems[5];
 
-                dt.Rows.Add(dr);
+                    dt.Rows.Add(dr);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("FAT : " + value + "\nerror : " + ex.Message + "\n\n" + ex.StackTrace);
+                }
             }
 
             ConsoRAF consoRAF = new ConsoRAF();
